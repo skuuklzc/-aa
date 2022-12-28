@@ -37,6 +37,9 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEditor.UI.dll:
+    - UnityEditor.UI.ButtonEditor
+    - UnityEditor.UI.ImageEditor
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -45,6 +48,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Mask
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Text
@@ -233,6 +237,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2626}
     - Class: 114
+      Script: {instanceID: 2668}
+    - Class: 114
       Script: {instanceID: 2810}
     - Class: 114
       Script: {instanceID: 2898}
@@ -279,7 +285,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 6d6006cbbac8d8d135dfdb96faf87b1c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Network
@@ -822,4 +828,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/connection.unity
   - Assets/Scenes/Room.unity
   - Assets/Scenes/Level.unity
-  playerPath: E:/unity/project/game00/_2D v3.exe
+  playerPath: E:/unity/project/-aa/game00/aaaa.exe
