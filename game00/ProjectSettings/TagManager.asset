@@ -14,6 +14,7 @@ TagManager:
   - ExplosionFX
   - HealthBar
   - networkobject
+  - Player2
   layers:
   - Default
   - TransparentFX
