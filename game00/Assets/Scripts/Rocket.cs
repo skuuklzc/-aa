@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Net.Sockets;
 
 public class Rocket : MonoBehaviour 
 {
-	public GameObject explosion;        // Prefab of explosion effect.
-	Network nobj;
-	Socket clientSocket;
-	byte[] sendBuff = new byte[1024];
+	public GameObject explosion;		// Prefab of explosion effect.
+
+
 	void Start () 
 	{
 		// Destroy the rocket after 2 seconds if it doesn't get destroyed before then.
 		Destroy(gameObject, 2);
-		nobj = GameObject.FindGameObjectWithTag("networkobject").GetComponent<Network>();
-		clientSocket = nobj.GetClientSock();
 	}
 
 
@@ -53,34 +49,11 @@ public class Rocket : MonoBehaviour
 			Destroy (gameObject);
 		}
 		// Otherwise if the player manages to shoot himself...
-		else if(col.gameObject.tag == "Player")
-		{
-			if (col.gameObject.GetComponent<PlayerHealth>().health > 0)
-			{
-				// Instantiate the explosion and destroy the rocket.
-				col.gameObject.GetComponent<PlayerHealth>().health -= 10;
-				col.gameObject.GetComponent<PlayerHealth>().UpdateHealthBar();
-            }
-            else
-            {
-				sendBuff = System.Text.Encoding.Default.GetBytes("gameover " + nobj.IP);
-				clientSocket.Send(sendBuff);
-				col.gameObject.GetComponent<Animator>().SetTrigger("Die");
-				
-			}
-			OnExplode();
-			Destroy (gameObject);
-		}
-		else if(col.gameObject.tag == "Player2")
-        {
-			OnExplode();
-			Destroy(gameObject);
-        }
-		else
+		else if(col.gameObject.tag != "Player")
 		{
 			// Instantiate the explosion and destroy the rocket.
 			OnExplode();
-			Destroy(gameObject);
+			Destroy (gameObject);
 		}
 	}
 }

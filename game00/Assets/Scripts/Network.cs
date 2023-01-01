@@ -20,10 +20,7 @@ public class Network : MonoBehaviour
     const byte LOGIN_SUCCESS = 8;
     Socket clientSock;
     Text inputText, outputText, inputPassword;
-    public int iSceneNum=0;
-    List<string> msgList = new List<string>();
-    public string whoAmI;
-    public string IP;
+    public int iSceneNum;
     String recvStr;
     // Start is called before the first frame update
     void Start()
@@ -37,7 +34,6 @@ public class Network : MonoBehaviour
         DontDestroyOnLoad(this);
         iSceneNum = 0;
     }
-    int flag = 0;
     byte[] sendBuff = new byte[100];
     byte[] recvBuff = new byte[100];
 
@@ -65,8 +61,7 @@ public class Network : MonoBehaviour
         Socket tempSock = (Socket)iar.AsyncState;
         int recvNum = tempSock.EndReceive(iar);
         //outputText.text = System.Text.Encoding.Default.GetString(recvBuff);
-       // string recvStr = System.Text.Encoding.Default.GetString(recvBuff,0,recvNum);//可以不要
-       // msgList.Add(recvStr);//可以不要
+        //  recvStr = System.Text.Encoding.Default.GetString(recvBuff);
         switch (recvBuff[0])
         {
             case REGIST_SUCCESS:
@@ -86,22 +81,17 @@ public class Network : MonoBehaviour
                 break;
             case LOGIN_SUCCESS:
                 recvStr = "登录成功";//登录后转到房间场景
-             //   flag = 1;
                 break;
         }
-        if(iSceneNum==0)
-            tempSock.BeginReceive(recvBuff, 0, 100, 0, recvCb, tempSock);
+        tempSock.BeginReceive(recvBuff, 0, 100, 0, recvCb, tempSock);
     }
     public void SendBtnClicked()
     {
         string inputStr = inputText.text;
-        var spaceIndex = inputStr.IndexOf(" ");
-        if (spaceIndex!=-1) { recvStr = "用户名存在空格"; return; }
         String passwordMD5Str = GetMD5String(inputPassword.text);
-        String sendStr = "registRequest " + inputText.text + " " + passwordMD5Str;
+        String sendStr = " " + inputText.text + " " + passwordMD5Str;
         sendBuff = System.Text.Encoding.Default.GetBytes(sendStr);
-        //   sendBuff[0] = REGIST_REQUEST;
-        
+        sendBuff[0] = REGIST_REQUEST;
         clientSock.Send(sendBuff);
     }
     private String GetMD5String(String password)
@@ -114,11 +104,11 @@ public class Network : MonoBehaviour
     }
     public void LoginBtnClicked()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);//跳转新场景
         String passwordMD5Str = GetMD5String(inputPassword.text);
-        String sendStr = "loginRequest " + inputText.text + " " + passwordMD5Str;
+        String sendStr = " " + inputText.text + " " + passwordMD5Str;
         sendBuff = System.Text.Encoding.Default.GetBytes(sendStr);
-       // sendBuff[0] = LOGIN_REQUEST;
+        sendBuff[0] = LOGIN_REQUEST;
         clientSock.Send(sendBuff);
     }
 
@@ -138,14 +128,11 @@ public class Network : MonoBehaviour
     void Update()
     {
         outputText.text = recvStr;
-        i++;
-        if (i % 240 == 0 && connected)
-            SendHeartbeat();
-        if (flag == 1)
-        {
-            flag = 0;
-            SceneManager.LoadScene(1);//跳转新场景
-        }
     }
-    
+    private void FixedUpdate()
+    {
+        i++;
+        if (i % 50 == 0 && connected)//发送心跳包频率
+            SendHeartbeat();
+    }
 }
