@@ -20,22 +20,23 @@ public class RoomsNetwork : MonoBehaviour
     {
         outputText = GameObject.Find("Canvas/OutputText").GetComponent<Text>();
         netWK = GameObject.FindGameObjectWithTag("networkobject").GetComponent<Network>();
-    //    netWK.iSceneNum = 1;
+        netWK.iSceneNum = 1;
         clientSock = netWK.GetClientSock();
         clientSock.BeginReceive(readBuff, 0, 100, 0, recvCb, clientSock);
     }
+    int flag = 0;
     private void Awake()
     {
 
     }
-    int flag = 0;
+   
     void recvCb(IAsyncResult iar)
     {
         Socket tempSock = (Socket)iar.AsyncState;
         int recvNum = tempSock.EndReceive(iar);
         String tempStr = System.Text.Encoding.Default.GetString(readBuff);
         String[] values = tempStr.Split(' ');
-
+        
         switch (values[0])
         {
             case "roomList":
@@ -44,13 +45,13 @@ public class RoomsNetwork : MonoBehaviour
                 //RefreshRoomList(values);   ÕâÊÇ´íµÄ
                 break;
             case "beginGame":
-                Debug.Log("game coming!");
+                netWK.whoAmI = values[1];
                 flag = 1;
-                SceneManager.LoadScene(2);
+              //   SceneManager.LoadScene(2);
                 break;
         }
-        //  if(netWK.iSceneNum == 1)
-        clientSock.BeginReceive(readBuff, 0, 100, 0, recvCb, clientSock);
+          if(netWK.iSceneNum == 1)
+             clientSock.BeginReceive(readBuff, 0, 100, 0, recvCb, clientSock);
     }
     GameObject[] textObjs;
     GameObject[] btnObjs;
@@ -82,29 +83,28 @@ public class RoomsNetwork : MonoBehaviour
     {
         int i = sender.GetComponent<EnterRoomBtnNum>().GetNum();
         String sSendStr = "enterRoom " + args[i + 2];
+        netWK.IP = args[i + 2];
         clientSock.Send(System.Text.Encoding.Default.GetBytes(sSendStr));
+        sender.GetComponent<Button>().enabled = false;
     }
     // Update is called once per frame
     int iFrequcy = 0;
     void Update()
     {
         iFrequcy++;
-    /*    if (flag == 1)
-        {
-            Debug.Log("game coming");
-            SceneManager.LoadScene(2);
-        }*/
-        if (iFrequcy % 120 == 0)
+        if (iFrequcy % 240 == 0)
         {
             outputText.text = recvStr;
             String[] values = strRooms.Split(' ');
             RefreshRoomList(values);
         }
+        if(flag==1)
+            SceneManager.LoadScene(2);
 
     }
     public void CreateRoomBtnClicked()
     {
         clientSock.Send(System.Text.Encoding.Default.GetBytes("createRoom "));
-        
+        GameObject.Find("Canvas/Button").GetComponent<Button>().enabled = false;
     }
 }

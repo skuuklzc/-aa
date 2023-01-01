@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Net.Sockets;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -21,14 +22,17 @@ public class PlayerControl : MonoBehaviour
 	private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private bool grounded = false;			// Whether or not the player is grounded.
-	private Animator anim;					// Reference to the player's animator component.
+	private Animator anim;                  // Reference to the player's animator component.
 
-
+	Network nobj;
+	Socket clientSocket;
 	void Awake()
 	{
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		anim = GetComponent<Animator>();
+		nobj = GameObject.FindGameObjectWithTag("networkobject").GetComponent<Network>();
+		clientSocket = nobj.GetClientSock();
 	}
 
 
@@ -98,7 +102,11 @@ public class PlayerControl : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-       // Debug.Log("fliped");
+		// Debug.Log("fliped");
+
+		byte[] sendBuff = new byte[1024];
+		sendBuff = System.Text.Encoding.Default.GetBytes("Flip ");
+		clientSocket.Send(sendBuff);
 	}
 
 

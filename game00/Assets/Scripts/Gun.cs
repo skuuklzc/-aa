@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Net.Sockets;
 
 public class Gun : MonoBehaviour
 {
@@ -8,11 +9,14 @@ public class Gun : MonoBehaviour
 
 
 	private PlayerControl playerCtrl;		// Reference to the PlayerControl script.
-	private Animator anim;					// Reference to the Animator component.
+	private Animator anim;                  // Reference to the Animator component.
 
-
+	Socket clientSocket;
+	Network netObj;
 	void Awake()
 	{
+		netObj = GameObject.FindGameObjectWithTag("networkobject").GetComponent<Network>();
+		clientSocket = netObj.GetClientSock();
 		// Setting up the references.
 		anim = transform.root.gameObject.GetComponent<Animator>();
 		playerCtrl = transform.root.GetComponent<PlayerControl>();
@@ -24,6 +28,9 @@ public class Gun : MonoBehaviour
 		// If the fire button is pressed...
 		if(Input.GetButtonDown("Fire1"))
 		{
+			byte[] sendBuff = new byte[1024];
+			sendBuff = System.Text.Encoding.Default.GetBytes("Fire ");
+			clientSocket.Send(sendBuff);
 			// ... set the animator Shoot trigger parameter and play the audioclip.
 			anim.SetTrigger("Shoot");
 			GetComponent<AudioSource>().Play();

@@ -56,8 +56,11 @@
     <Analyzer Include="E:\vs2019\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Network.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
+    <Compile Include="Assets\Scripts\RoomsNetwork.cs" />
     <Compile Include="Assets\Scripts\Rocket.cs" />
+    <Compile Include="Assets\Scripts\EnterRoomBtnNum.cs" />
     <Compile Include="Assets\Scripts\PickupSpawner.cs" />
     <Compile Include="Assets\Scripts\Destroyer.cs" />
     <Compile Include="Assets\Scripts\SetParticleSortingLayer.cs" />
@@ -67,19 +70,22 @@
     <Compile Include="Assets\Scripts\LayBombs.cs" />
     <Compile Include="Assets\Scripts\BackgroundPropSpawner.cs" />
     <Compile Include="Assets\Scripts\Bomb.cs" />
+    <Compile Include="Assets\Scripts\Gun2.cs" />
+    <Compile Include="Assets\Scripts\PlayerControl2.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\BombPickup.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\GameNetWork.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
+    <Compile Include="Assets\Scripts\FollowPlayer2.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Pauser.cs" />
+    <Compile Include="Assets\Scripts\BaseSocket.cs" />
     <Compile Include="Assets\Scripts\Remover.cs" />
     <Compile Include="Assets\Scripts\ScoreShadow.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\Network.cs" />
-    <Compile Include="Assets\Scripts\RoomsNetwork.cs" />
-    <Compile Include="Assets\Scripts\EnterRoomBtnNum.cs" />
+    <Compile Include="Assets\Scripts\PlayerHealth2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
