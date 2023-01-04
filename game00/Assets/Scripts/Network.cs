@@ -22,8 +22,7 @@ public class Network : MonoBehaviour
     Text inputText, outputText, inputPassword;
     public int iSceneNum=0;
     List<string> msgList = new List<string>();
-    public string whoAmI;
-    public string IP;
+    public string userName;
     String recvStr;
     // Start is called before the first frame update
     void Start()
@@ -64,9 +63,6 @@ public class Network : MonoBehaviour
     {
         Socket tempSock = (Socket)iar.AsyncState;
         int recvNum = tempSock.EndReceive(iar);
-        //outputText.text = System.Text.Encoding.Default.GetString(recvBuff);
-       // string recvStr = System.Text.Encoding.Default.GetString(recvBuff,0,recvNum);//可以不要
-       // msgList.Add(recvStr);//可以不要
         switch (recvBuff[0])
         {
             case REGIST_SUCCESS:
@@ -86,7 +82,7 @@ public class Network : MonoBehaviour
                 break;
             case LOGIN_SUCCESS:
                 recvStr = "登录成功";//登录后转到房间场景
-             //   flag = 1;
+                flag = 1;
                 break;
         }
         if(iSceneNum==0)
@@ -114,10 +110,11 @@ public class Network : MonoBehaviour
     }
     public void LoginBtnClicked()
     {
-        SceneManager.LoadScene(1);
+      //  SceneManager.LoadScene(1);
         String passwordMD5Str = GetMD5String(inputPassword.text);
         String sendStr = "loginRequest " + inputText.text + " " + passwordMD5Str;
         sendBuff = System.Text.Encoding.Default.GetBytes(sendStr);
+        userName = inputText.text;
        // sendBuff[0] = LOGIN_REQUEST;
         clientSock.Send(sendBuff);
     }
@@ -137,7 +134,8 @@ public class Network : MonoBehaviour
     int i = 0;
     void Update()
     {
-        outputText.text = recvStr;
+         outputText.text =recvStr ;
+     //   outputText.text = IP;
         i++;
         if (i % 240 == 0 && connected)
             SendHeartbeat();

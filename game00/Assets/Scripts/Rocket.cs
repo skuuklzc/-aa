@@ -63,8 +63,8 @@ public class Rocket : MonoBehaviour
             }
             else
             {
-				sendBuff = System.Text.Encoding.Default.GetBytes("gameover " + nobj.IP);
-				clientSocket.Send(sendBuff);
+				//sendBuff = System.Text.Encoding.Default.GetBytes("gameover " + nobj.userName);
+				//clientSocket.Send(sendBuff);
 				col.gameObject.GetComponent<Animator>().SetTrigger("Die");
 				
 			}
@@ -73,6 +73,13 @@ public class Rocket : MonoBehaviour
 		}
 		else if(col.gameObject.tag == "Player2")
         {
+			if(col.gameObject.GetComponent<PlayerHealth2>().health <= 0)
+            {
+				col.gameObject.GetComponent<Animator>().SetTrigger("Die");
+				sendBuff = System.Text.Encoding.Default.GetBytes("gameover " + nobj.userName);
+				clientSocket.Send(sendBuff);
+				
+			}
 			OnExplode();
 			Destroy(gameObject);
         }

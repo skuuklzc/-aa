@@ -9,7 +9,8 @@ public class GameNetWork : MonoBehaviour
     GameObject hero1;
     GameObject hero2;
     Network netObj;
-    
+
+    int flag = 0;
     ulong add1PerFrame = 0;
     byte[] readBuff = new byte[1024];
     byte[] sendBuff = new byte[1024];
@@ -83,8 +84,8 @@ public class GameNetWork : MonoBehaviour
                     GameObject.Find("hero2").GetComponent<PlayerHealth2>().UpdateHealthBar();
                     if (h <= 0) 
                     {
-                     //   SendData("gameover " + netObj.IP);
-                        GameObject.Find("hero2").GetComponent<Animator>().SetTrigger("Die");                                                
+                       // GameObject.Find("hero2").GetComponent<Animator>().SetTrigger("Die");
+                        //  SendData("gameover " + netObj.userName);
                     }
                     break;
                 case "Flip":

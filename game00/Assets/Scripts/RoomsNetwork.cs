@@ -25,17 +25,13 @@ public class RoomsNetwork : MonoBehaviour
         clientSock.BeginReceive(readBuff, 0, 100, 0, recvCb, clientSock);
     }
     int flag = 0;
-    private void Awake()
-    {
-
-    }
-   
     void recvCb(IAsyncResult iar)
     {
         Socket tempSock = (Socket)iar.AsyncState;
         int recvNum = tempSock.EndReceive(iar);
         String tempStr = System.Text.Encoding.Default.GetString(readBuff);
         String[] values = tempStr.Split(' ');
+      //  netWK.IP = values[2];
         
         switch (values[0])
         {
@@ -45,7 +41,6 @@ public class RoomsNetwork : MonoBehaviour
                 //RefreshRoomList(values);   ÕâÊÇ´íµÄ
                 break;
             case "beginGame":
-                netWK.whoAmI = values[1];
                 flag = 1;
               //   SceneManager.LoadScene(2);
                 break;
@@ -83,7 +78,7 @@ public class RoomsNetwork : MonoBehaviour
     {
         int i = sender.GetComponent<EnterRoomBtnNum>().GetNum();
         String sSendStr = "enterRoom " + args[i + 2];
-        netWK.IP = args[i + 2];
+  //      netWK.IP = args[i + 2];
         clientSock.Send(System.Text.Encoding.Default.GetBytes(sSendStr));
         sender.GetComponent<Button>().enabled = false;
     }

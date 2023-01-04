@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Rocket.cs" />
     <Compile Include="Assets\Scripts\EnterRoomBtnNum.cs" />
     <Compile Include="Assets\Scripts\PickupSpawner.cs" />
+    <Compile Include="Assets\Scripts\PlayerHealth2.cs" />
     <Compile Include="Assets\Scripts\Destroyer.cs" />
     <Compile Include="Assets\Scripts\SetParticleSortingLayer.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Assets\Scripts\Remover.cs" />
     <Compile Include="Assets\Scripts\ScoreShadow.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\PlayerHealth2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
